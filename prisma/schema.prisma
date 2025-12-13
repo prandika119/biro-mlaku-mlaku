@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Role {
+  ADMIN
+  PARTICIPANT
+}
+
+enum ParticipantStatus {
+  JOINING
+  PENDING
+  CANCELLED
+  COMPLETED
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  username  String   @unique
+  email     String   @unique
+  phone     String   @unique
+  role      Role     @default(PARTICIPANT)
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  trips     TripParticipant[]
+  @@map("users")
+}
+
+model Trip {
+  id            Int       @id @default(autoincrement())
+  name          String
+  description   String
+  start_date    DateTime
+  end_date      DateTime
+  location      String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  participants  TripParticipant[]
+  @@map("trips")
+
+}
+
+model TripParticipant {
+  id        Int      @id @default(autoincrement())
+  tripId    Int
+  userId    Int
+  status    ParticipantStatus @default(PENDING)
+  createdAt DateTime @default(now())
+
+  trip      Trip     @relation(fields: [tripId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  @@map("trip_participants")
+}

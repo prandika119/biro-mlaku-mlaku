@@ -7,7 +7,7 @@
 - username (varchar)
 - email (varchar)
 - phone (varchar)
-- role (varchar)
+- role (enum: admin, participant)
 - password (varchar)
 - created_at (timestamp)
 - updated_at (timestamp)
