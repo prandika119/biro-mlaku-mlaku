@@ -29,7 +29,16 @@ export default tseslint.config(
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
-      "prettier/prettier": ["error", { endOfLine: "auto" }],
+      // Tambahkan aturan ini:
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_', // Mengabaikan argumen fungsi yang diawali underscore (_)
+          varsIgnorePattern: '^_', // Mengabaikan variabel yang diawali underscore (_)
+          caughtErrorsIgnorePattern: '^_', // Mengabaikan error catch yang diawali underscore (_)
+        },
+      ],
+      'prettier/prettier': ['error', { endOfLine: 'auto' }],
     },
   },
 );

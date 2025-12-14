@@ -1,94 +1,59 @@
 # User API Endpoints
 
-## Add Participant (Admin Only)
+## Register User (Admin Only)
 
 - **Endpoint:** `POST /api/users`
-- **Description:** Create a new user.
+- **Description:** Create a new user
 - **Headers:**
-  - `Authorization: Bearer <token>`
+  - `Authorization: Bearer <token>` (Admin only)
 - **Request Body:**
   - `name` (string, required)
   - `username` (string, required)
   - `email` (string, required)
   - `phone` (string, required)
-  - `role` (string: admin, participant; required)
   - `password` (string, required)
 - **Response:**
-  - `201 Created` with user data on success
+  - `201 Created` on success
   - `400 Bad Request` on validation errors
-  - `401 Unauthorized` if token is missing or invalid
-  - `403 Forbidden` if user is not an admin
+  - `401 Unauthorized` if not logged in
+  - `403 Forbidden` if not admin
 
-## Login User (Admin & Participant)
+## Login User
 
 - **Endpoint:** `POST /api/users/login`
-- **Description:** Authenticate a user and return a JWT token.
+- **Description:** Authenticate a user and return a token
 - **Request Body:**
   - `email` (string, required)
   - `password` (string, required)
-
-```json
-{
-  "email": "john.doe@example.com",
-  "password": "password123"
-}
-```
-
 - **Response:**
-  - `200 OK` with JWT token on success
-  - `401 Unauthorized` on authentication failure
+  - `200 OK` on success
+  - `401 Unauthorized` on invalid credentials
 
-```json
-// success response example
-{
-  "status": "true",
-  "data": {
-    "user": {
-      "id": 1,
-      "name": "John Doe",
-      "username": "johndoe",
-      "email": "john.doe@example.com"
-    },
-    "token": "<jwt_token>"
-  },
-  "message": "Login successful",
-  "error": null
-}
+## Get User Profile
 
-// invalid credentials response example
-{
-  "status": "false",
-  "data": null,
-  "message": "Invalid email or password",
-  "error": []
-}
-```
+- **Endpoint:** `GET /api/users/profile`
+- **Description:** Get the authenticated user's profile
+- **Headers:**
+  - `Authorization: Bearer <token>`
+- **Response:**
+  - `200 OK` with user data
+  - `401 Unauthorized` if not logged in
 
 ## Get All Users (Admin Only)
 
 - **Endpoint:** `GET /api/users`
-- **Description:** Retrieve a list of all users.
+- **Description:** Get list of all users
 - **Headers:**
-  - `Authorization: Bearer <token>`
+  - `Authorization: Bearer <token>` (Admin only)
 - **Response:**
   - `200 OK` with list of users
-  - `401 Unauthorized` if token is missing or invalid
-  - `403 Forbidden` if user is not an admin
+  - `401 Unauthorized` if not logged in
+  - `403 Forbidden` if not admin
 
-## Get User Profile (Admin & Participant)
+## Update User Profile
 
-- **Endpoint:** `GET /api/users/profile`
-- **Description:** Retrieve the profile of the authenticated user.
-- **Headers:**
-  - `Authorization: Bearer <token>`
-- **Response:**
-  - `200 OK` with user profile data
-  - `401 Unauthorized` if token is missing or invalid
-
-## Update User Profile (Admin & Participant)
-
-- **Endpoint:** `PUT /api/users/profile`
-- **Description:** Update the profile of the authenticated user.
+- **Endpoint:** `PATCH /api/users`
+- **Description:** Update the authenticated user's profile
 - **Headers:**
   - `Authorization: Bearer <token>`
 - **Request Body:**
@@ -99,14 +64,34 @@
 - **Response:**
   - `200 OK` on success
   - `400 Bad Request` on validation errors
-  - `401 Unauthorized` if token is missing or invalid
+  - `401 Unauthorized` if not logged in
+
+## Update User by ID (Admin Only)
+
+- **Endpoint:** `PATCH /api/users/:id`
+- **Description:** Update a user by ID
+- **Headers:**
+  - `Authorization: Bearer <token>` (Admin only)
+- **Request Body:**
+  - `name` (string, optional)
+  - `username` (string, optional)
+  - `email` (string, optional)
+  - `phone` (string, optional)
+- **Response:**
+  - `200 OK` on success
+  - `400 Bad Request` on validation errors
+  - `401 Unauthorized` if not logged in
+  - `403 Forbidden` if not admin
+  - `404 Not Found` if user does not exist
 
 ## Delete User (Admin Only)
 
-- **Endpoint:** `DELETE /api/users/{id}`
-- **Description:** Delete a user by ID.
+- **Endpoint:** `DELETE /api/users/:id`
+- **Description:** Delete a user by ID
 - **Headers:**
-  - `Authorization: Bearer <token>`
+  - `Authorization: Bearer <token>` (Admin only)
 - **Response:**
   - `200 OK` on success
+  - `401 Unauthorized` if not logged in
+  - `403 Forbidden` if not admin
   - `404 Not Found` if user does not exist
