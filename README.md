@@ -50,12 +50,36 @@ $ npm run start:prod
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
+
+## Database Setup
+
+1.  **Configure Environment Variables**:
+    Copy `.env.example` to `.env` and update the `DATABASE_URL` with your database credentials.
+
+2.  **Run Migrations**:
+    Apply the database schema changes.
+
+    ```bash
+    npx prisma migrate dev
+    ```
+
+3.  **Seed Database**:
+    Populate the database with initial data (e.g., admin user).
+
+    ```bash
+    npx prisma db seed
+    ```
+
+## API Documentation
+
+The API documentation is available in the `docs/` directory. It covers:
+
+- [User Endpoints](docs/users_endpoint.md)
+- [Trip Endpoints](docs/trips_endpoint.md)
+- [Trip Participant Endpoints](docs/trip_participants_endpoint.md)
+- [ERD](docs/erd.md)
+- [Postman Guide](docs/POSTMAN_GUIDE.md)
 
 ## Deployment
 

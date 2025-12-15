@@ -28,6 +28,16 @@
   - `200 OK` with list of trips
   - `401 Unauthorized` if token is missing or invalid
 
+## Get Trip History (Admin & Participant)
+
+- **Endpoint:** `GET /api/trips/history`
+- **Description:** Retrieve a list of trips where the user is a participant.
+- **Headers:**
+  - `Authorization: Bearer <token>`
+- **Response:**
+  - `200 OK` with list of trips
+  - `401 Unauthorized` if token is missing or invalid
+
 ## Get Trip by ID (Admin & Participant)
 
 - **Endpoint:** `GET /api/trips/{id}`

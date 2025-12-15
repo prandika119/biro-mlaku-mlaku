@@ -4,8 +4,8 @@ Postman collection untuk testing semua endpoint API Biro Mlaku-Mlaku.
 
 ## 📁 Files
 
-- `Biro-Mlaku-Mlaku.postman_collection.json` - Postman collection dengan semua endpoint
-- `Biro-Mlaku-Mlaku.postman_environment.json` - Environment variables untuk collection
+- `docs/Biro-Mlaku-Mlaku.postman_collection.json` - Postman collection dengan semua endpoint
+- `docs/Biro-Mlaku-Mlaku.postman_environment.json` - Environment variables untuk collection
 
 ## 🚀 Cara Import ke Postman
 
@@ -13,14 +13,14 @@ Postman collection untuk testing semua endpoint API Biro Mlaku-Mlaku.
 
 1. Buka Postman
 2. Klik **Import** button (di kiri atas)
-3. Pilih file `Biro-Mlaku-Mlaku.postman_collection.json`
+3. Pilih file `docs/Biro-Mlaku-Mlaku.postman_collection.json`
 4. Klik **Import**
 
 ### 2. Import Environment
 
 1. Klik **Environments** di sidebar kiri
 2. Klik **Import**
-3. Pilih file `Biro-Mlaku-Mlaku.postman_environment.json`
+3. Pilih file `docs/Biro-Mlaku-Mlaku.postman_environment.json`
 4. Klik **Import**
 5. Pilih environment "Biro Mlaku-Mlaku Environment" dari dropdown di kanan atas
 
@@ -37,6 +37,7 @@ Postman collection untuk testing semua endpoint API Biro Mlaku-Mlaku.
 ### Trips
 
 - **GET** `/api/trips` - Get All Trips (requires auth)
+- **GET** `/api/trips/history` - Get Trip History (requires auth)
 - **GET** `/api/trips/:id` - Get Trip by ID (requires auth)
 - **POST** `/api/trips` - Create Trip (requires admin)
 - **PATCH** `/api/trips/:id` - Update Trip (requires admin)
