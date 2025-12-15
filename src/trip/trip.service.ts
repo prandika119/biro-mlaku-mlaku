@@ -118,7 +118,10 @@ export class TripService {
     });
   }
 
-  async addParticipantToTrip(tripId: number, userId: number): Promise<any> {
+  async addParticipantToTrip(
+    tripId: number,
+    userId: number,
+  ): Promise<TripParticipantResponse> {
     // Cek trip exist
     const existingTrip = await this.PrismaService.trip.findUnique({
       where: { id: tripId },
@@ -355,5 +358,50 @@ export class TripService {
         id: existingParticipant.id,
       },
     });
+  }
+
+  async getTripHistory(userId: number): Promise<TripParticipantResponse[]> {
+    const participants = await this.PrismaService.tripParticipant.findMany({
+      where: {
+        userId: userId,
+      },
+      include: {
+        user: {
+          select: {
+            name: true,
+            email: true,
+            phone: true,
+          },
+        },
+        trip: {
+          select: {
+            name: true,
+            location: true,
+            description: true,
+            start_date: true,
+            end_date: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    return participants.map((participant) => ({
+      id: participant.id,
+      tripId: participant.tripId,
+      userId: participant.userId,
+      status: participant.status,
+      userName: participant.user?.name,
+      userEmail: participant.user?.email,
+      userPhone: participant.user?.phone,
+      tripName: participant.trip?.name,
+      tripLocation: participant.trip?.location,
+      tripDescription: participant.trip?.description,
+      tripStartDate: participant.trip?.start_date?.toISOString(),
+      tripEndDate: participant.trip?.end_date?.toISOString(),
+      createdAt: participant.createdAt.toISOString(),
+    }));
   }
 }

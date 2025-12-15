@@ -13,6 +13,8 @@ import {
 import { TripService } from './trip.service';
 import { RoleGuard } from '../common/role.guard';
 import { AuthGuard } from '../common/auth.guard';
+import { Auth } from '../common/auth.decorator';
+import { UserResponse } from '../model/user.model';
 import {
   CreateTripRequest,
   TripParticipantResponse,
@@ -30,6 +32,20 @@ export class TripController {
   @UseGuards(AuthGuard)
   async getTrips(): Promise<WebResponse<TripResponse[]>> {
     const trips = await this.tripService.getTrips();
+    return {
+      success: true,
+      data: trips,
+      errors: [],
+    };
+  }
+
+  @Get('history')
+  @HttpCode(200)
+  @UseGuards(AuthGuard)
+  async getTripHistory(
+    @Auth() user: UserResponse,
+  ): Promise<WebResponse<TripParticipantResponse[]>> {
+    const trips = await this.tripService.getTripHistory(user.id);
     return {
       success: true,
       data: trips,
