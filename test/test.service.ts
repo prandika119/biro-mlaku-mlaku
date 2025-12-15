@@ -39,4 +39,26 @@ export class TestService {
       },
     });
   }
+
+  async deleteTrip() {
+    await this.PrismaService.trip.deleteMany({});
+  }
+
+  async createTrip() {
+    return await this.PrismaService.trip.create({
+      data: {
+        name: 'Test Trip',
+        description: 'Test trip description',
+        location: 'Bali',
+        start_date: new Date('2025-12-25T10:00:00Z'),
+        end_date: new Date('2025-12-27T18:00:00Z'),
+      },
+    });
+  }
+
+  async getTrip(tripId: number) {
+    return this.PrismaService.trip.findUnique({
+      where: { id: tripId },
+    });
+  }
 }
