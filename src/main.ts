@@ -7,6 +7,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = app.get<LoggerService>(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(logger);
-  await app.listen(process.env.PORT ?? 3000);
+  // Tambahkan '0.0.0.0' sebagai argumen kedua
+  await app.listen(process.env.PORT ?? 3000, '0.0.0.0');
+
+  logger.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

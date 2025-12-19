@@ -81,6 +81,45 @@ The API documentation is available in the `docs/` directory. It covers:
 - [ERD](docs/erd.md)
 - [Postman Guide](docs/POSTMAN_GUIDE.md)
 
+## Docker Deployment
+
+### Quick Start with Docker
+
+```bash
+# 1. Copy environment file
+cp .env.docker .env
+
+# 2. Edit environment variables (IMPORTANT: Change JWT_SECRET!)
+nano .env
+
+# 3. Build and run with Docker Compose
+docker compose up -d --build
+
+# 4. Check status
+docker compose ps
+
+# 5. Run seeder (optional)
+docker compose exec app npx prisma db seed
+```
+
+### Docker Commands
+
+```bash
+# Start containers
+npm run docker:up
+
+# Stop containers
+npm run docker:down
+
+# View logs
+npm run docker:logs
+
+# Rebuild containers
+npm run docker:build
+```
+
+For detailed deployment instructions, see [DOCKER_DEPLOYMENT.md](DOCKER_DEPLOYMENT.md).
+
 ## Deployment
 
 When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
